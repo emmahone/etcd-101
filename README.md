@@ -1,9 +1,7 @@
 # ETCD
 etcd is an open source distributed key-value store used for storing and retrieving configuration data, metadata, and state information of a system. It was developed by CoreOS and is now maintained by the Cloud Native Computing Foundation (CNCF).
 
-etcd provides a highly available and consistent way to store and manage data across a distributed system. It uses the Raft consensus algorithm to ensure that data is replicated and consistent across multiple nodes in a cluster. This makes it ideal for use in cloud-native applications and microservices architectures.
-
-etcd can be used as a standalone database or as a component of a larger system. It has APIs for multiple programming languages and can be integrated with a variety of tools and platforms, such as Kubernetes, Docker, and Cloud Foundry.
+etcd provides a highly available and consistent way to store and manage data across a distributed system. It uses the Raft consensus algorithm to ensure that data is replicated and consistent across multiple nodes in a cluster. This makes it ideal for use in cloud-native applications and microservices architectures. It is used by OpenShift to store configuration data for the various components of the platform. It serves as a central repository for storing and managing the state of the entire cluster.
 
 # Distributed Consensus / RAFT
 ```mermaid
