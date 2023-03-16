@@ -33,6 +33,8 @@ When a client makes a change to the database, the leader receives the update and
 
 If a node fails or becomes disconnected, Raft uses a series of timeouts and retries to detect the failure and elect a new leader. Once a new leader is elected, the consensus protocol resumes and updates can continue to be made to the database.
 
+Learn more about RAFT [here](https://raft.github.io/).
+
 # 'snapshot' and 'db' Files
 The snapshot and db files in etcd are both used to store the state of the etcd database, but they serve slightly different purposes.
 
