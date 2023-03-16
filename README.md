@@ -57,7 +57,7 @@ Once an entry has been committed, it is applied to the state machine, which is a
 ```mermaid
 graph TD;
   A[Client] -- Read Request --> B(Leader);
-  B -- Read --> C(State Machine);
+  B -- Read --> C(State Machine / API);
   C -- Response --> A;
 ```
 In the read process, a client sends a read request to the leader, which reads the current state of the system from the state machine and sends the response back to the client.
