@@ -10,14 +10,11 @@ graph TD;
   B -- Log Entry --> C(Log);
   C -- Replicate --> D(Follower 1);
   C -- Replicate --> E(Follower 2);
-  C -- Replicate --> F(Follower 3);
   D -- Acknowledge --> C;
   E -- Acknowledge --> C;
-  F -- Acknowledge --> C;
   B -- Commit --> G(db);
-  D -- Apply --> G;
-  E -- Apply --> G;
-  F -- Apply --> G;
+  E -- Apply --> F(db)
+  D -- Apply --> H(db)
 ```
 Distributed consensus is the process of reaching an agreement among a group of distributed nodes on a single value or decision, even in the presence of failures or network delays. This is a crucial problem in distributed systems, where multiple nodes need to coordinate and agree on a shared state or decision.
 
