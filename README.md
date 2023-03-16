@@ -100,8 +100,21 @@ The leader election process is divided into several phases, as follows:
 If no candidate receives votes from a quorum of nodes, the election process starts over with a new term number.
 
 # Quorum
-Quorum refers to the minimum number of nodes that must agree on a decision before it can be considered valid and committed to the database. Specifically, a quorum is defined as the majority of the nodes in the cluster, which is calculated as (N/2)+1, where N is the total number of nodes in the cluster.
+Quorum refers to the minimum number of nodes that must agree on a decision before it can be considered valid and committed to the database. Specifically, a quorum is defined as the majority of the nodes in the cluster, which is calculated as (N/2)+1, where N is the total number of nodes in the cluster. The resiliency of a cluster is the number of nodes that can be lost before the cluster loses quorum. This is calculated as (n-1)/2.
 
 For example, if a cluster has five nodes, the quorum would be three, because three is the smallest number of nodes that constitutes a majority. In this case, a decision would only be considered valid if it receives votes from at least three nodes.
 
 The use of a quorum in the Raft consensus algorithm ensures that decisions are only made when there is agreement among a majority of the nodes in the cluster, which helps to prevent inconsistencies and ensures that all nodes have a consistent view of the state of the system. Additionally, it allows the system to continue operating even if some nodes fail or become disconnected, as long as a quorum of nodes remains available.
+
+# Does adding additional nodes to an etcd cluster inprove performance?
+While etcd is designed to be a scalable and distributed key-value store, running etcd clusters with a large number of peers can introduce some downsides and challenges. Here are a few potential issues to consider:
+
+- Increased network complexity: As the number of etcd peers increases, so does the complexity of the network topology. Each additional peer adds more connections and potential points of failure, which can make it more difficult to troubleshoot network issues.
+
+- Higher resource requirements: Running a large etcd cluster can require significant computing resources, particularly memory and CPU. In order to maintain good performance and reliability, each node in the cluster should have enough resources to handle the load.
+
+- Slower write performance: With a larger number of peers, the consensus protocol used by etcd to ensure consistency and availability can become slower. This is because each write operation must be replicated across all nodes in the cluster, and as the number of nodes increases, the time required for consensus can increase.
+
+- Increased risk of split-brain: In a large etcd cluster, the risk of split-brain (where different nodes in the cluster have different views of the state) can be higher. This can occur if network partitions or other issues cause nodes to become disconnected from each other. If this happens, it can be difficult to recover a consistent state without manual intervention.
+
+Overall, while it is possible to run etcd clusters with a large number of peers, doing so requires careful consideration of the potential downsides and trade-offs. It is important to ensure that the cluster is properly configured, monitored, and maintained in order to ensure reliable and consistent operation. Openshift has choosen 3 peers as the optimal tradeoff between performance and resilience. 
