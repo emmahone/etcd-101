@@ -7,7 +7,7 @@ etcd provides a highly available and consistent way to store and manage data acr
 ```mermaid
 graph TD;
   A[Client] -- Update Request --> B(Leader);
-  B -- Log Entry --> C(Log);
+  B -- Log Entry --> C(WAL);
   C -- Replicate --> D(Follower 1);
   C -- Replicate --> E(Follower 2);
   D -- Acknowledge --> C;
@@ -52,6 +52,15 @@ Etcd uses the Raft consensus algorithm to ensure that updates are committed to t
 In Raft, a log entry is considered committed when it has been written to the leader's log and the logs of a majority of the followers. This ensures that the entry will be available even in the event of peer failures or network partitions.
 
 Once an entry has been committed, it is applied to the state machine, which is a deterministic finite automaton that represents the current state of the etcd database. Applying the entry to the state machine ensures that the change is reflected in the database, and that all peers in the etcd cluster have a consistent view of the system.
+
+# What is a WAL file?
+The term WAL stands for "write-ahead log," which is a technique used to ensure data consistency and durability in the event of a system failure.
+
+In Etcd, the WAL file is a file that stores all the write operations before they are applied to the main data store. It is a binary file that contains a sequence of records, where each record corresponds to a single write operation.
+
+Whenever a write operation is performed on the Etcd cluster, it is first logged in the WAL file. The write operation is then applied to the main data store, and once it is confirmed that the write operation has been successful, the WAL file is truncated.
+
+The WAL file is essential for ensuring data durability, as it ensures that any data that is written to the Etcd cluster is first recorded in the WAL file. This allows the system to recover from a failure by replaying the WAL file to reconstruct the state of the cluster at the time of the failure.
 
 # How does etcd read from the db when a client makes a read request?
 ```mermaid
