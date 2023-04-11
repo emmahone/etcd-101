@@ -112,7 +112,7 @@ For example, if a cluster has five peers, the quorum would be three, because thr
 
 The use of a quorum in the Raft consensus algorithm ensures that decisions are only made when there is agreement among a majority of the peers in the cluster, which helps to prevent inconsistencies and ensures that all peers have a consistent view of the state of the system. Additionally, it allows the system to continue operating even if some peers fail or become disconnected, as long as a quorum of peers remains available.
 
-# Does adding additional peers to an etcd cluster inprove performance?
+# Does adding additional peers to an etcd cluster improve performance?
 While etcd is designed to be a scalable and distributed key-value store, running etcd clusters with a large number of peers can introduce some downsides and challenges. Here are a few potential issues to consider:
 
 - Increased network complexity: As the number of etcd peers increases, so does the complexity of the network topology. Each additional peer adds more connections and potential points of failure, which can make it more difficult to troubleshoot network issues.
