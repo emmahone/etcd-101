@@ -66,7 +66,7 @@ The WAL file is essential for ensuring data durability, as it ensures that any d
 ```mermaid
 graph TD;
   A[Client] -- Read Request --> B(Leader);
-  B -- Read --> C(State Machine / API);
+  B -- Read --> C(State Machine / gRPC);
   C -- Response --> A;
 ```
 In the read process, a client sends a read request to the leader, which reads the current state of the system from the state machine and sends the response back to the client.
