@@ -53,6 +53,8 @@ In Raft, a log entry is considered committed when it has been written to the lea
 
 Once an entry has been committed, it is applied to the state machine, which is a deterministic finite automaton that represents the current state of the etcd database. Applying the entry to the state machine ensures that the change is reflected in the database, and that all peers in the etcd cluster have a consistent view of the system.
 
+NOTE: A non-leader can respond to clients for read-only requests
+
 # What is a WAL file?
 The term WAL stands for "write-ahead log," which is a technique used to ensure data consistency and durability in the event of a system failure.
 
