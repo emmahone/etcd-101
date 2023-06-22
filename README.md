@@ -97,18 +97,18 @@ When a follower peer detects that the leader has failed or become disconnected, 
 
 The leader election process is divided into several phases, as follows:
 
-- Initiation: When a follower peer detects that the current leader has failed or become disconnected, it starts a new leader election by incrementing its current term number and becoming a candidate.
+- `Initiation`: When a follower peer detects that the current leader has failed or become disconnected, it starts a new leader election by incrementing its current term number and becoming a candidate.
 
-- Request Votes: The candidate sends a RequestVote RPC to all other peers in the cluster, asking for their vote to become the new leader. The RPC contains the candidate's term number, its ID, and the index and term number of the last log entry it has seen.
+- `Request Votes`: The candidate sends a RequestVote RPC to all other peers in the cluster, asking for their vote to become the new leader. The RPC contains the candidate's term number, its ID, and the index and term number of the last log entry it has seen.
 
-- Voting: When a follower receives a RequestVote RPC, it checks its own term number. If the candidate's term number is greater than its own, it updates its term number and votes for the candidate. Otherwise, it rejects the vote. A follower can only vote for one candidate per term.
+- `Voting`: When a follower receives a RequestVote RPC, it checks its own term number. If the candidate's term number is greater than its own, it updates its term number and votes for the candidate. Otherwise, it rejects the vote. A follower can only vote for one candidate per term.
 
-- Election Results: If a candidate receives votes from a quorum of peers, it becomes the new leader. It sends AppendEntries RPCs to all other peers in the cluster to replicate any missing log entries and update their state machines.
+- `Election Results`: If a candidate receives votes from a quorum of peers, it becomes the new leader. It sends AppendEntries RPCs to all other peers in the cluster to replicate any missing log entries and update their state machines.
 
 If no candidate receives votes from a quorum of peers, the election process starts over with a new term number.
 
 # Quorum
-Quorum refers to the minimum number of peers that must agree on a decision before it can be considered valid and committed to the database. Specifically, a quorum is defined as the majority of the peers in the cluster, which is calculated as (N/2)+1, where N is the total number of peers in the cluster. The resiliency of a cluster is the number of peers that can be lost before the cluster loses quorum. This is calculated as (n-1)/2.
+Quorum refers to the minimum number of peers that must agree on a decision before it can be considered valid and committed to the database. Specifically, a quorum is defined as the majority of the peers in the cluster, which is calculated as `(N/2)+1`, where N is the total number of peers in the cluster. The resiliency of a cluster is the number of peers that can be lost before the cluster loses quorum. This is calculated as `(N-1)/2`.
 
 For example, if a cluster has five peers, the quorum would be three, because three is the smallest number of peers that constitutes a majority. In this case, a decision would only be considered valid if it receives votes from at least three peers.
 
@@ -117,12 +117,12 @@ The use of a quorum in the Raft consensus algorithm ensures that decisions are o
 # Does adding additional peers to an etcd cluster improve performance?
 While etcd is designed to be a scalable and distributed key-value store, running etcd clusters with a large number of peers can introduce some downsides and challenges. Here are a few potential issues to consider:
 
-- Increased network complexity: As the number of etcd peers increases, so does the complexity of the network topology. Each additional peer adds more connections and potential points of failure, which can make it more difficult to troubleshoot network issues.
+- `Increased network complexity`: As the number of etcd peers increases, so does the complexity of the network topology. Each additional peer adds more connections and potential points of failure, which can make it more difficult to troubleshoot network issues.
 
-- Higher resource requirements: Running a large etcd cluster can require significant computing resources, particularly memory and CPU. In order to maintain good performance and reliability, each peer in the cluster should have enough resources to handle the load.
+- `Higher resource requirements`: Running a large etcd cluster can require significant computing resources, particularly memory and CPU. In order to maintain good performance and reliability, each peer in the cluster should have enough resources to handle the load.
 
-- Slower write performance: With a larger number of peers, the consensus protocol used by etcd to ensure consistency and availability can become slower. This is because each write operation must be replicated across all peers in the cluster, and as the number of peers increases, the time required for consensus can increase.
+- `Slower write performance`: With a larger number of peers, the consensus protocol used by etcd to ensure consistency and availability can become slower. This is because each write operation must be replicated across all peers in the cluster, and as the number of peers increases, the time required for consensus can increase.
 
-- Increased risk of split-brain: In a large etcd cluster, the risk of split-brain (where different peers in the cluster have different views of the state) can be higher. This can occur if network partitions or other issues cause peers to become disconnected from each other. If this happens, it can be difficult to recover a consistent state without manual intervention.
+- `Increased risk of split-brain`: In a large etcd cluster, the risk of split-brain (where different peers in the cluster have different views of the state) can be higher. This can occur if network partitions or other issues cause peers to become disconnected from each other. If this happens, it can be difficult to recover a consistent state without manual intervention.
 
 Overall, while it is possible to run etcd clusters with a large number of peers, doing so requires careful consideration of the potential downsides and trade-offs. It is important to ensure that the cluster is properly configured, monitored, and maintained in order to ensure reliable and consistent operation. Openshift has choosen 3 peers as the optimal tradeoff between performance and resilience. 
