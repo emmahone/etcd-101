@@ -56,7 +56,7 @@ Once an entry has been committed, it is applied to the state machine, which is a
 NOTE: A non-leader can respond to clients for read-only requests
 
 # What is a WAL file?
-The term WAL stands for "write-ahead log," which is a technique used to ensure data consistency and durability in the event of a system failure.
+The term WAL stands for `write-ahead log`, which is a technique used to ensure data consistency and durability in the event of a system failure.
 
 In Etcd, the WAL file is a file that stores all the write operations before they are applied to the main data store. It is a binary file that contains a sequence of records, where each record corresponds to a single write operation.
 
